@@ -1,0 +1,38 @@
+name: sistema_pos
+description: A new Flutter project for POS and Inventory with Supabase.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  
+  # State Management
+  flutter_riverpod: ^2.5.1
+  
+  # Supabase & Auth
+  supabase_flutter: ^2.4.2
+  
+  # UI & Fonts
+  google_fonts: ^6.2.1
+  cupertino_icons: ^1.0.6
+  
+  # Routing
+  go_router: ^13.2.4
+  
+  # Scanner
+  mobile_scanner: ^4.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
