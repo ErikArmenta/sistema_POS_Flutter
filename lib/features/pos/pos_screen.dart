@@ -33,7 +33,19 @@ class _PosScreenState extends ConsumerState<PosScreen> {
       if (code != null) {
         setState(() => _isProcessingCode = true);
         
-        await ref.read(posControllerProvider.notifier).scanProduct(code);
+        final errorMsg = await ref.read(posControllerProvider.notifier).scanProduct(code);
+        
+        if (mounted) {
+          if (errorMsg != null) {
+             ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(errorMsg), backgroundColor: AppColors.errorRed),
+            );
+          } else {
+             ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Producto agregado'), backgroundColor: AppColors.successGreen, duration: Duration(milliseconds: 500)),
+            );
+          }
+        }
         
         // Evitar escanear el mismo código múltiples veces muy rápido
         await Future.delayed(const Duration(seconds: 2));

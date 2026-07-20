@@ -17,12 +17,12 @@ class PosController extends StateNotifier<List<CartItem>> {
 
   PosController(this.ref) : super([]);
 
-  Future<void> scanProduct(String barcode) async {
+  Future<String?> scanProduct(String barcode) async {
     // 1. Verificar si ya está en el carrito
     final existingIndex = state.indexWhere((item) => item.product.codigoBarras == barcode);
     if (existingIndex >= 0) {
       incrementQuantity(state[existingIndex].product.id);
-      return;
+      return null;
     }
 
     // 2. Buscar en Supabase
@@ -36,10 +36,14 @@ class PosController extends StateNotifier<List<CartItem>> {
       if (response != null) {
         final product = Product.fromJson(response);
         state = [...state, CartItem(product: product, cantidad: 1)];
+        return null;
+      } else {
+        return 'Producto no encontrado en inventario';
       }
     } catch (e) {
       // Manejar error (por ejemplo, producto no encontrado)
       print('Error al escanear: $e');
+      return 'Error al buscar el producto';
     }
   }
 

@@ -19,7 +19,7 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen> {
   final _stockController = TextEditingController();
   final _codigoController = TextEditingController();
   
-  bool _isScanning = false;
+  bool _isScanning = true; // Empieza abierta a la primera
   bool _isSaving = false;
 
   void _onDetect(BarcodeCapture capture) {
@@ -77,13 +77,13 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen> {
         backgroundColor: AppColors.primaryBlue,
         foregroundColor: Colors.white,
       ),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
         children: [
-          // En pantallas grandes se puede mostrar el escáner a un lado, o usar un modal
+          // En la parte superior mostramos el escáner si está activo, de forma horizontal
           if (_isScanning)
-            Expanded(
-              flex: 1,
+            SizedBox(
+              height: 250,
+              width: double.infinity,
               child: Stack(
                 children: [
                   MobileScanner(onDetect: _onDetect),
@@ -100,7 +100,6 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen> {
             ),
           
           Expanded(
-            flex: 2,
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(AppConstants.padding * 2),
               child: Form(
